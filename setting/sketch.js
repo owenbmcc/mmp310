@@ -29,6 +29,8 @@ var currentSetting = "beach";
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+	jerryY = height * 2/3;
+	jennyY = height * 2/3;
 }
 
 function draw() {
@@ -73,6 +75,7 @@ function draw() {
 	
 
 	// draw characters
+	imageMode(CENTER);
 	image(jerry, jerryX, jerryY);
 	image(jenny, jennyX, jennyY);
 
@@ -81,4 +84,81 @@ function draw() {
 	textSize(30);
 	textAlign(CENTER, CENTER);
 	text(story, width/4, 20, width/2);
+
+	// instructions
+	textSize(18);
+	fill('white');
+	// text("Click to go to the next scene", width - 100, height - 70, 100);
+	text("Right arrow to advance story", width - 100, height - 70, 100);
+}
+
+/*
+	event listener
+	user interaction with browser
+	mousePressed
+	p5 running in background to call this function when user clicks
+*/
+
+function mousePressed() {
+	// change scene 
+	// scene order: beach, ocean, island
+	if (currentSetting == "beach") {
+
+		// change setting
+		currentSetting = "ocean";
+
+		// update story
+		story = "Jerry and Jenny decided to swim across the ocean.";
+
+		// update characters position
+		jerryX = 400;
+		jennyX = 500;
+
+	} else if (currentSetting == "ocean") {
+		currentSetting = "island";
+		story = "Jerry and Jenny arrived at an island in the middle of the ocean.";
+
+		jennyX = 600;
+
+	} else if (currentSetting == "island") {
+		currentSetting = "beach";
+		story = "Once upon a time, there were two characters named Jenny and Jerry.";
+
+		jerryX = 100;
+		jennyX = 300;
+	}
+}
+
+function keyPressed() {
+	
+	// test the keycode 
+	if (keyCode == 39) {
+		// change scene 
+		// scene order: beach, ocean, island
+		if (currentSetting == "beach") {
+
+			// change setting
+			currentSetting = "ocean";
+
+			// update story
+			story = "Jerry and Jenny decided to swim across the ocean.";
+
+			// update characters position
+			jerryX = 400;
+			jennyX = 500;
+
+		} else if (currentSetting == "ocean") {
+			currentSetting = "island";
+			story = "Jerry and Jenny arrived at an island in the middle of the ocean.";
+
+			jennyX = 600;
+
+		} else if (currentSetting == "island") {
+			currentSetting = "beach";
+			story = "Once upon a time, there were two characters named Jenny and Jerry.";
+
+			jerryX = 100;
+			jennyX = 300;
+		}
+	}
 }
