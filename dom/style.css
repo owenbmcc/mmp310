@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+label {
+	color: gold;
+	font-size: 18px;
+	font-family: sans-serif;
+}
+
+button {
+	border: 6px solid gold;
+	border-radius: 5px;
+	padding: 10px;
+	background-color: plum;
+	color: gold;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: gold;
+	color: plum;
+}
+
+button:active {
+	background-color: plum;
+	border-color: plum;
+	color: gold;
+}
