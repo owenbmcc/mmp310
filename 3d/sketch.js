@@ -27,11 +27,12 @@ function draw() {
 	noStroke();
 	// lights();
 
-	ambientLight(75, 75, 120);
+	ambientLight(35, 35, 50);
 
 	// direction values -1, 1
-	directionalLight(250, 200, 200, 1, 1, -1);
-	pointLight(255, 255, 255, mouseX - width/2, mouseY - height/2, 50);
+	directionalLight(255, 220, 220, 1, 1, -1);
+	
+	pointLight(255, 255, 255, mouseX - width/2, mouseY - height/2, 150);
 
 
 	ambientMaterial(255);
@@ -45,21 +46,29 @@ function draw() {
 
 
 	ambientMaterial(221, 160, 221);
-	specularMaterial(221, 160, 221);
-	shininess(255);
+	
 
 	rotateX(rotX.value());
 	rotateY(rotY.value());
 	rotateZ(rotZ.value());
 
-	box(100);
+	box(100, 200, 50);
+
+	push();
+	translate(0, -50, 0);
+	cylinder(100, 50, 24, 1);
+	pop();
+
+	specularMaterial(200, 200, 255);
+	shininess(200);
 
 	push();
 	translate(200, 0, 0);
-	sphere(60);
+	sphere(100, 24, 24);
 	pop();
 
-
+	push();
 	translate(-200, 0, 0);
-	torus(60);
+	torus(100, 20, 16, 16);
+	pop();
 }
