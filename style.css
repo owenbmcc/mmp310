@@ -1,16 +1,91 @@
-body {
-	background: rgb(63,94,251);
-	background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+/* our comment goes in here */
 
-	font-size: 20px;
-	font-family: verdana;
-	color: white;
+/* generic selector */
+
+body {
+	background-color: lightblue;
+	color: white; /* text color */
+	font-family: Andale Mono, monospace;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
 }
 
 a {
-	color: cyan;
+	color: blue;
+	transition: color 200ms ease-in;
 }
 
-h1, a {
+/* psuedo selector - user interacts */
+a:hover {
+	color: orangered;
+}
+
+img {
+	width: 100%;
+}
+
+/* id and class selector */
+
+#container {
+	min-width: 320px;
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+#header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+/* nested selector */
+#header ul {
+	display: flex;
+}
+
+#header li {
+	margin-left: 1em;
+}
+
+#header a {
+	font-size: 1.5em;
+}
+
+#portfolio {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1em;
+}
+
+.project {
+	border: 2px solid orangered;
+	padding: 1em;
+	background-color: transparent;
+	transition: background-color 200ms ease-in;
+}
+
+.project:hover {
+	background-color: white;
+}
+
+.project a {
+	font-size: 1.25em;
+}
+
+/* about */
+
+#portrait {
+	width: 200px;
+	float: right;
+}
+
+#about p {
 	font-size: 2em;
 }
