@@ -6,6 +6,8 @@ body {
 	background-color: lightblue;
 	color: white; /* text color */
 	font-family: Andale Mono, monospace;
+	margin: 0;
+	overflow: hidden;
 }
 
 ul {
