@@ -40,11 +40,21 @@ function setup() {
 function sign(msg, x, y) {
 	image(signImage, x, y);
 
-	fill(255);
-	textFont("Comic Sans MS");
-	textSize(18);
-	textAlign(CENTER, CENTER);
-	text(msg, x - signImage.width/2 + 20, y - signImage.height/2, signImage.width - 40, signImage.height - 60);
+	// 2d collision between player (jerry) and sign 
+	
+	if (jerryX - jerryIdle.width / 2 < x + signImage.width / 2 &&
+		jerryX + jerryIdle.width / 2 > x - signImage.width / 2 &&
+		jerryY - jerryIdle.height / 2 < y + signImage.height / 2 &&
+		jerryY + jerryIdle.height / 2 > y - signImage.height / 2) {
+
+		fill(255);
+		textFont("Comic Sans MS");
+		textSize(18);
+		textAlign(CENTER, CENTER);
+		text(msg, x - signImage.width/2 + 20, y - signImage.height/2, signImage.width - 40, signImage.height - 60);
+	}
+
+	
 }
 
 function draw() {
@@ -97,8 +107,8 @@ function draw() {
 	}
 
 	/* signs */
-	sign("Start here!", 100, height / 2);
-	sign("Begin the search for the magic wand.", 500, height / 2);
+	sign("Begin the search for the magic wand.", 100, height / 2);
+	sign("Start here!", 500, height / 2);
 	sign("The magic wand is to the west.", 1000, height / 2 + 100);
 
 	/* draw character image */
