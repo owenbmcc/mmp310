@@ -67,7 +67,7 @@ img {
 }
 
 .project {
-	border: 2px solid orangered;
+	border: 2px solid purple;
 	padding: 1em;
 	background-color: transparent;
 	transition: background-color 200ms ease-in;

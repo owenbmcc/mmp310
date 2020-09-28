@@ -4,14 +4,18 @@
 */
 
 /* global variables */
-var jerryIdle, jerryWalk;
+var jerryIdle, jerryWalk, jerryJump;
 var jerryX, jerryY;
 var jerryMainX, jerryMainY;
 var jerrySpeed = 3;
 
+// game physics
 var groundY = 200;
+var GRAVITY = 2; // acceleration 2 pix per frame
+var jerryYSpeed = 2;
+var jerryIsJumping = false;
 
-var treeImage, cloudImage, signImage;
+var treeImage, cloudImage, signImage, snakeImage;
 
 var bgTreeX = [50, 100, 200, 350, 423, 507, 571, 800, 900, 1200];
 var bgTreeY = [300, 250, 350, 250, 333, 356, 267, 350, 300, 400];
@@ -24,14 +28,22 @@ var cloudPositions = [
 	[946, 182]
 ];
 
+var snakePositions = []; // add snake x values here
+
 var scene = "main"; // game, win, lose
+var bgColor = 'lightblue';
+var minSnakes = 3;
+var maxSnakes = 6;
 
 function preload() {
 	jerryIdle = loadImage("jerry_idle.gif");
 	jerryWalk = loadImage("jerry_walk.gif");
+	jerryJump = loadImage("jerry_jump.gif");
+
 	treeImage = loadImage("tree.png");
 	cloudImage = loadImage("cloud.png");
 	signImage = loadImage("sign.png");
+	snakeImage = loadImage("snake.gif");
 }
 
 function setup() {
@@ -56,7 +68,6 @@ function draw() {
 		lose();
 	}
 }
-
 
 
 // scene functions
@@ -106,10 +117,9 @@ function main() {
 	}
 
 	/* signs */
-	sign("Snake World!", 500, height / 2);
-
-	sign("Begin the search for the magic wand.", 100, height / 2);
-	sign("The magic wand is to the west.", 1000, height / 2 + 100);
+	sign("Easy Snake World!", 500, height / 2, 'lightblue', 3, 6);
+	sign("Medium Snake World!", 100, height / 2, 'purple', 7, 10);
+	sign("Hard Snake World!", 1000, height / 2 + 100, 'darkblue', 11, 15);
 
 	/* draw character image */
 	if (jerryIsWalking) {
@@ -125,26 +135,75 @@ function main() {
 	}
 }
 
-function setupGame() {
+function setupGame(fromMain, bg, min, max) {
 
-	jerryMainX = jerryX;
-	jerryMainY = jerryY;
+	bgColor = bg;
+	minSnakes = min;
+	maxSnakes = max;
 
+	// save jerry's map position
+	if (fromMain) {
+		jerryMainX = jerryX;
+		jerryMainY = jerryY;
+	}
+
+	// move jerry to game ground
 	jerryX = 200;
 	jerryY = height - groundY;
+
+	// add snakes
+	snakePositions = []; // reset all snake positions
+	var snakeNumber = random(minSnakes, maxSnakes);
+	for (let i = 0; i < snakeNumber; i++) {
+		// add an x positoin for a new snake half a canvas away from one another + random value
+		snakePositions.push( random(width/2, width) + i * width / 2 );
+	}
 
 	scene = 'game';
 }
 
 function game() {
-	background('lightblue');
+	background(bgColor);
 	noStroke();
 	fill('lightgreen');
 	rect(0, height - groundY, width, groundY);
 
 	clouds();
 
-	image(jerryWalk, jerryX, jerryY);
+	/* jumping and falling */
+	// apply gravity
+	if (jerryY < height - groundY) {
+		jerryYSpeed += GRAVITY;
+	} else {
+		// jerry on the ground
+		jerryYSpeed = 0;
+		jerryIsJumping = false;
+	}
+
+	// 32 is space
+	if (!jerryIsJumping && keyIsDown(32)) {
+		jerryYSpeed = -30;
+		jerryIsJumping = true;
+	}
+
+	jerryY += jerryYSpeed;
+
+	if (jerryIsJumping) {
+		image(jerryJump, jerryX, jerryY);
+	} else {
+		image(jerryWalk, jerryX, jerryY);
+	}
+
+	for (let i = 0; i < snakePositions.length; i++) {
+		let x = snakePositions[i];
+		snake(x); // draw snake and detect player collision
+		snakePositions[i] -= 10;
+
+		// if jerry gets past last snake
+		if (i == snakePositions.length - 1 && jerryX > x) {
+			scene = 'win';
+		}
+	}
 }
 
 function win() {
@@ -171,13 +230,13 @@ function lose() {
 
 	// r key
 	if (keyIsDown(82)) {
-		setupGame();
+		setupGame(false, bgColor, minSnakes, maxSnakes);
 	}
 }
 
 // game object functions 
 
-function sign(msg, x, y) {
+function sign(msg, x, y, bg, min, max) {
 	image(signImage, x, y);
 
 	// 2d collision between player (jerry) and sign 
@@ -198,7 +257,7 @@ function sign(msg, x, y) {
 
 		// enter event
 		if (keyIsDown(ENTER)) {
-			setupGame();
+			setupGame(true, bg, min, max);
 		}
 	}
 }
@@ -214,5 +273,21 @@ function clouds() {
 		}
 
 		cloudPositions[i][1] += random(-1, 1); // random y
+	}
+}
+
+function snake(x) {
+	let y = height - groundY;
+	image(snakeImage, x, y);
+
+	// collision
+	if (jerryX - jerryIdle.width / 2 < x + snakeImage.width / 4 &&
+		jerryX + jerryIdle.width / 2 > x - snakeImage.width / 4 &&
+		jerryY - jerryIdle.height / 2 < y + snakeImage.height / 4 &&
+		jerryY + jerryIdle.height / 2 > y - snakeImage.height / 4) {
+
+		// change the scene
+		scene = 'lose';
+
 	}
 }
