@@ -10,7 +10,6 @@ class Player extends GameObject {
 		this.isJumping = false;
 
 		this.speed = 3;
-		this.ySpeed = 0;
 	}
 
 	draw() {
