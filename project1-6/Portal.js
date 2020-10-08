@@ -12,6 +12,6 @@ class Portal extends GameObject {
 		text(this.message, this.x - this.width/2 + 20, this.y - this.height/2, this.width - 40, this.height - 60);
 
 		textSize(16);
-		text("Hit Enter to Play", this.x, this.y + 20);
+		text("Hit Enter Key", this.x, this.y + 20);
 	}
 }
