@@ -16,6 +16,17 @@ class End extends MapScene {
 
 		let snakePortal = new Portal("Fight the snakes!", width - 200, height / 2, 'hard');
 		this.portals.push(snakePortal);
-	}
 
+		// initial scene position
+		this.playerX = 100;
+		this.playerY = height / 2 + 100;
+
+		let x = width / 2 + 400;
+		let y = height / 2 + 200;
+		let label = 'Pogo Stick';
+		let extraLife = new Item(pogoStickImage, x, y, label, function () {
+			player.jumpSpeed -= 10;
+		});
+		this.items.push(extraLife);
+	}
 }
