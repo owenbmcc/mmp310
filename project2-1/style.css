@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Roboto+Mono&display=swap');
+
+body {
+	background-color: lightblue;
+	font-family: 'PT Sans', sans-serif;
+}
+
+button {
+	all: inherit;
+	font-size: 1.25em;
+	color: black;
+	border: 2px solid darkorange;
+	border-radius: 0.25em;
+	padding: 0.25em;
+	cursor: pointer;
+}
+
+button:hover {
+	background: darkorange;
+	color: black;
+}
+
+button:active {
+	border-color: black;
+}
+
+h1 {
+	color: darkorange;
+}
+
+p {
+	font-size: 1.25em;
+	margin: 0;
+}
+
+#container {
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+#interface {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+button#start {
+	margin-left: auto;
+	margin-right: 1em;
+}
+
+.answers {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option {
+	font-size: 2em;
+
+    border: 8px solid darkorange;
+    border-radius: 0.5em;
+    background: purple;
+    color: white;
+    
+    flex-basis: 200px;
+    height: 200px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: background-color 200ms ease-in;
+}
+
+.option:hover {
+	background-color: blue;
+}
